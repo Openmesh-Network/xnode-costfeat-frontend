@@ -3,7 +3,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  assetPrefix: 'https://openmesh-xnode-costfeat.vercel.app',
+ // assetPrefix: 'https://openmesh-xnode-costfeat.vercel.app',
 }
 
 module.exports = nextConfig
