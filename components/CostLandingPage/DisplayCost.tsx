@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css' // import styles
 import './react-quill.css'
 import dataOptions from './data'
+import { display } from '@mui/system'
 type provider = {
   name: string
   list?: string[]
@@ -37,13 +38,12 @@ const DisplayCost = ({
   const [newMessageHtml, setNewMessageHtml] = useState('')
   const [nextStep, setNextStep] = useState<boolean>(false)
   const [isHRVisible, setHRVisible] = useState(false)
-
+  const [xnodevisible, setxnodevisible] = useState({
+    NodeOperator: 'flex',
+    Data: 'none',
+  })
   function findItemProvider(data: any) {
     for (let i = 0; i < data.length; i++) {
-      // console.log('the data')
-      // console.log(data)
-      // console.log(providers)
-
       // console.log('the providers')
       // console.log(providers)
       // console.log('the subSelectionOption')
@@ -71,7 +71,9 @@ const DisplayCost = ({
   const completedProviders = completeProviders(providers)
   // Antes de renderizar os provedores, ordene-os:
   const sortedProviders = completedProviders.sort((a, b) => {
-    return a['Cost'] - b['Cost']
+
+    return a.Cost - b.Cost
+
   })
 
   function calculateTaxForBars(name) {
@@ -80,7 +82,7 @@ const DisplayCost = ({
       valueFinal[completedProviders[i]?.name] =
         parseInt(completedProviders[i][name]) || 0
     }
-    console.log('the valuefinal' + valueFinal['AWS'])
+
     return normalizeValues(valueFinal)
   }
 
@@ -94,7 +96,9 @@ const DisplayCost = ({
     for (const chave in obj) {
       objNormalizado[chave] = Number(((obj[chave] / maxValue) * 100).toFixed(2))
     }
-    objNormalizado['xnode'] = Number(((30 / maxValue) * 100).toFixed(2))
+
+    objNormalizado.xnode = Number(((30 / maxValue) * 100).toFixed(2))
+
 
     return objNormalizado
   }
@@ -226,7 +230,10 @@ const DisplayCost = ({
 
             <div
               key="openmesh"
-              className="flex justify-between text-[14px] font-bold text-[#AEAEAE] lg:text-[20px]"
+
+              className="justify-between text-[14px] font-bold text-[#AEAEAE] lg:text-[20px]"
+              style={{ display: xnodevisible[data] }}
+
             >
               <div className="mb-[10px] flex items-center gap-x-[12px]">
                 <div className="w-[150px]">
@@ -239,10 +246,12 @@ const DisplayCost = ({
                 >
                   <div
                     style={{
-                      width: `${calculateTaxForBars('Time')['xnode']}%`,
+
+                      width: `${calculateTaxForBars('Time').xnode}%`,
                       height: '25px',
                       background: calcularGradiente(
-                        calculateTaxForBars('Time')['xnode'] / 100,
+                        calculateTaxForBars('Time').xnode / 100,
+
                       ),
                     }}
                   ></div>
