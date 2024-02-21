@@ -71,9 +71,7 @@ const DisplayCost = ({
   const completedProviders = completeProviders(providers)
   // Antes de renderizar os provedores, ordene-os:
   const sortedProviders = completedProviders.sort((a, b) => {
-
     return a.Cost - b.Cost
-
   })
 
   function calculateTaxForBars(name) {
@@ -98,7 +96,6 @@ const DisplayCost = ({
     }
 
     objNormalizado.xnode = Number(((30 / maxValue) * 100).toFixed(2))
-
 
     return objNormalizado
   }
@@ -230,10 +227,8 @@ const DisplayCost = ({
 
             <div
               key="openmesh"
-
               className="justify-between text-[14px] font-bold text-[#AEAEAE] lg:text-[20px]"
               style={{ display: xnodevisible[data] }}
-
             >
               <div className="mb-[10px] flex items-center gap-x-[12px]">
                 <div className="w-[150px]">
@@ -246,12 +241,10 @@ const DisplayCost = ({
                 >
                   <div
                     style={{
-
                       width: `${calculateTaxForBars('Time').xnode}%`,
                       height: '25px',
                       background: calcularGradiente(
                         calculateTaxForBars('Time').xnode / 100,
-
                       ),
                     }}
                   ></div>
