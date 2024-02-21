@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css' // import styles
 import './react-quill.css'
-
+import dataOptions from './data'
 type provider = {
   name: string
   list?: string[]
@@ -15,21 +15,22 @@ type provider = {
 
 type subSelectionOption = {
   name: string
-  desc: string
   plataform?: any
 }
 
 interface ModalI {
+  data: string
   providers: provider[]
   onBack(): void
   subSelectionOption: subSelectionOption
-  data: any
+ 
 }
 
 const DisplayCost = ({
+  data,
   providers,
   subSelectionOption,
-  data,
+ 
   onBack,
 }: ModalI) => {
   const [newMessageHtml, setNewMessageHtml] = useState('')
@@ -38,8 +39,10 @@ const DisplayCost = ({
 
   function findItemProvider(data: any) {
     for (let i = 0; i < data.length; i++) {
-      // console.log('the data')
-      // console.log(data)
+      //console.log('the data')
+      //console.log(data)
+      //console.log(providers)
+     
       // console.log('the providers')
       // console.log(providers)
       // console.log('the subSelectionOption')
@@ -55,21 +58,36 @@ const DisplayCost = ({
     return findItemProvider(data)?.plataform[provider.name]?.at(1) || 0
   }
 
+
+  const completeProviders = (providerlist) => {
+    let datao = []
+    providerlist.map((value,index)=> {
+   
+      let test= dataOptions[data][subSelectionOption.name][value]
+      test.name = value
+      datao.push(test)
+    })
+    return datao;
+  }
+  let completedProviders = completeProviders(providers)
   // Antes de renderizar os provedores, ordene-os:
-  const sortedProviders = providers.sort((a, b) => {
-    return getProviderValue(a) - getProviderValue(b)
+  const sortedProviders = completedProviders.sort((a, b) => {
+    return a["Cost"] - b["Cost"]
   })
 
-  function calculateTaxForBars() {
-    const valueFinal = {}
-    for (let i = 0; i < providers.length; i++) {
-      valueFinal[providers[i]?.name] =
-        subSelectionOption?.plataform?.[providers[i]?.name]?.at(1) || 0
-    }
 
+
+  function calculateTaxForBars(name) {
+    const valueFinal = {}
+    for (let i = 0; i < completedProviders.length; i++) {
+      valueFinal[completedProviders[i]?.name] =
+        parseInt(completedProviders[i][name]) || 0
+    }
+    console.log("the valuefinal" + valueFinal['AWS'])
     return normalizeValues(valueFinal)
   }
 
+  
   // normalize 0 to 100
   function normalizeValues(obj: { [key: string]: number }) {
     const values = Object.values(obj) as number[]
@@ -79,7 +97,8 @@ const DisplayCost = ({
     const objNormalizado: { [key: string]: number } = {}
     for (const chave in obj) {
       objNormalizado[chave] = Number(((obj[chave] / maxValue) * 100).toFixed(2))
-    }
+    };
+    objNormalizado['xnode'] = Number(((30 / maxValue) * 100).toFixed(2))
 
     return objNormalizado
   }
@@ -103,75 +122,72 @@ const DisplayCost = ({
 
   return (
     <>
-      <div className="">
-        {/* <div className="mb-[25px]">
-          Specs:{' '}
-          <div className="ml-[5px] flex gap-x-[20px] text-[16px] text-[#6e6e6e]">
-            {findItemProvider(data)?.specs?.map((spec, index) => (
-              <div key={index}>
-                {spec.name}: {spec.value}
-              </div>
-            ))}
-          </div>
-        </div> */}
-        <div
-          className={`h-fit max-w-[590px] cursor-pointer rounded-[10px] border-[1px] border-[#A4A4A4] py-[18px] px-[20px] text-[14px] font-bold text-[#000]  hover:bg-[#e9e9e949] lg:text-[20px]`}
-        >
+      <div className="max-w-[100%]">
+        <div className="h-fit max-w-[590px] cursor-pointer rounded-[10px] border-[1px] border-[#A4A4A4] py-[18px] px-[20px] text-[14px] font-bold text-[#000]  hover:bg-[#e9e9e949] lg:text-[20px]">
           <div className="flex justify-between gap-x-[110px]">
             <div>
-              {' '}
               <div>{subSelectionOption.name}</div>
-              <div className="text-[12px] font-normal lg:text-[16px]">
-                {subSelectionOption.desc}
-              </div>
             </div>
           </div>
         </div>
-        <div className="mt-[56px] grid gap-x-[100px]">
-          {sortedProviders.map((provider, index) => (
-            <div
-              key={index}
-              className={`flex justify-between text-[14px] font-bold text-[#AEAEAE] lg:text-[20px]`}
-            >
-              <div className="mb-[10px] flex items-center gap-x-[12px]">
-                {' '}
-                <div className="w-[150px]">
-                  <div className="">{provider.name}</div>
-                  {/* <div>
-                    {findItemProvider(data)?.plataform[provider.name]?.at(0) ||
-                      '$0.00'}{' '}
-                  </div> */}
-                </div>
-                <div
-                  className={`origin-left transform transition-transform duration-[1200ms] ease-out ${
-                    isHRVisible ? 'scale-x-100' : 'scale-x-0'
-                  } flex w-[300px] gap-x-[20px] 2xl:w-[500px]`}
-                >
-                  <div
-                    style={{
-                      width: `${calculateTaxForBars()?.[provider.name]}%`,
-                      height: '25px',
-                      background: calcularGradiente(
-                        calculateTaxForBars()?.[provider.name] / 100,
-                      ),
-                    }}
-                  ></div>
-                  <div className="text-[18px] font-normal text-[#000]">
-                    {findItemProvider(data)?.plataform[provider.name]?.at(1) ||
-                      '0.00'}
-                    $
-                  </div>
-                </div>
-                {}
-              </div>
+        <div className="" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between",width:"100%" }}>
+  <div className="mt-[56px] gap-x-[100px] h-fit max-w-[50%] cursor-pointer rounded-[10px] border-[1px] border-[#A4A4A4] py-[18px] px-[20px]" style={{ width: "90%", alignItems: "center", display: "flex", flexDirection: "column", marginRight: "20px" }}>
+  <h1 style={{paddingBottom:"30px"}}>Price</h1>
+    {sortedProviders.map((provider, index) => (
+      <div key={index} className="flex justify-between text-[14px] font-bold text-[#AEAEAE] lg:text-[20px]">
+        <div className="mb-[10px] flex items-center gap-x-[12px]">
+          <div className="w-[150px]">
+            <div>{provider.name}</div>
+          </div>
+          <div className={`origin-left transform transition-transform duration-[1200ms] ease-out ${isHRVisible ? 'scale-x-100' : 'scale-x-0'} flex w-[300px] gap-x-[20px] 2xl:w-[500px]`}>
+            <div style={{ width: `${calculateTaxForBars('Cost')[provider.name]}%`, height: '25px', background: calcularGradiente(calculateTaxForBars('Cost')[provider.name] / 100) }}></div>
+            <div className="text-[18px] font-normal text-[#000]">
+              {provider['Cost'].toFixed(2) || '0.00'}$
             </div>
-          ))}
+          </div>
         </div>
+      </div>
+    ))}
+  </div>
+
+  {/* Second set of bars */}
+  <div className="mt-[56px] gap-x-[100px] h-fit max-w-[50%] cursor-pointer rounded-[10px] border-[1px] border-[#A4A4A4] py-[18px] px-[20px]" style={{ width: "90%", alignItems: "center", display: "flex", flexDirection: "column", marginLeft: "20px" }}>
+    <h1 style={{paddingBottom:"30px"}}>Time for Deployment (Minutes)</h1>
+   
+    {sortedProviders.map((provider, index) => (
+      <div key={index} className="flex justify-between text-[14px] font-bold text-[#AEAEAE] lg:text-[20px]" >
+        <div className="mb-[10px] flex items-center gap-x-[12px]">
+          <div className="w-[150px]">
+            <div>{provider.name}</div>
+          </div>
+          <div className={`origin-left transform transition-transform duration-[1200ms] ease-out ${isHRVisible ? 'scale-x-100' : 'scale-x-0'} flex w-[300px] gap-x-[20px] 2xl:w-[500px]`}>
+            <div style={{ width: `${calculateTaxForBars('Time')[provider.name]}%`, height: '25px', background: calcularGradiente(calculateTaxForBars('Time')[provider.name] / 100) }}></div>
+            <div className="text-[18px] font-normal text-[#000]">
+              {parseInt(provider['Time']).toFixed(2) || '0.00'}
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+     
+     <div key="openmesh" className="flex justify-between text-[14px] font-bold text-[#AEAEAE] lg:text-[20px]" >
+        <div className="mb-[10px] flex items-center gap-x-[12px]">
+          <div className="w-[150px]">
+            <div>Xnode</div>
+          </div>
+          <div className={`origin-left transform transition-transform duration-[1200ms] ease-out ${isHRVisible ? 'scale-x-100' : 'scale-x-0'} flex w-[300px] gap-x-[20px] 2xl:w-[500px]`}>
+            <div style={{ width: `${calculateTaxForBars('Time')['xnode']}%`, height: '25px', background: calcularGradiente(calculateTaxForBars('Time')['xnode'] / 100) }}></div>
+            <div className="text-[18px] font-normal text-[#000]">
+              {parseInt('30').toFixed(2) || '0.00'}
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
         <div className="mt-[170px] ml-[30px]">
           <div
-            onClick={() => {
-              onBack()
-            }}
+            onClick={onBack}
             className="w-fit cursor-pointer rounded-[5px] bg-[#0354EC] px-[40px] py-[12px] text-[14px] font-bold text-[#FFFFFF] hover:bg-[#023ca7] lg:text-[20px]"
           >
             Compare more
@@ -179,7 +195,6 @@ const DisplayCost = ({
         </div>
       </div>
     </>
-  )
-}
+  );}
 
 export default DisplayCost

@@ -8,221 +8,47 @@ import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css' // import styles
 import './react-quill.css'
 import DisplayCost from './DisplayCost'
-
+import dataOptions from './data'
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
 })
 
-const dataOptions = {
-  RPC: [
-    {
-      name: 'Running a Solana RPC',
-      specs: [
-        { name: 'RAM', value: '512GB' },
-        { name: 'CPU', value: '16 Cores' },
-        { name: 'Storage', value: '500GB + 1 TB' },
-        { name: 'Network', value: '1GBPS' },
-      ],
-      plataform: {
-        GCP: ['$1848 N2d-high-mem-64', 1848],
-        AWS: ['>2776$ R6a.16x.large', 2776],
-        AZURE: ['$3,111 E64-16ads V5', 3111],
-      },
-    },
-    {
-      name: 'Running a Solana verifier',
-      specs: [
-        { name: 'RAM', value: '256GB' },
-        { name: 'CPU', value: '16 Cores' },
-        { name: 'Storage', value: '500GB + 1 TB' },
-        { name: 'Network', value: '-' },
-      ],
-      plataform: {
-        GCP: ['$1160 n2d-high-mem-64', 1160],
-        AWS: ['$1452$ r6a.8x.large', 1452],
-        AZURE: ['$1619 E32-16ads V5', 1619],
-      },
-    },
-    {
-      name: 'Running a Fantom API Node',
-      specs: [
-        { name: 'RAM', value: '32GB' },
-        { name: 'CPU', value: '4 Cores' },
-        { name: 'Storage', value: '13 TB' },
-        { name: 'Network', value: '10GBPS' },
-      ],
-      plataform: {
-        AZURE: ['$1476.55 B8ps-v2', 1476.55],
-        AWS: ['$1611 m6i.2xlarge', 1611],
-        GCP: ['$2500$ n2-standard-8', 2500],
-      },
-    },
-    {
-      name: 'Running a Fantom Validator Node',
-      specs: [
-        { name: 'RAM', value: '32GB' },
-        { name: 'CPU', value: '4 Cores' },
-        { name: 'Storage', value: '13 TB' },
-        { name: 'Network', value: '10GBPS' },
-      ],
-      plataform: {
-        AWS: ['$536.2 m6i.2x.large', 536.2],
-        GCP: ['$542.17 n2d-high-mem-8', 542.17],
-        AZURE: ['$554.95 B8ps-v2', 554.95],
-      },
-    },
-    {
-      name: 'Running a Fantom Read Only',
-      specs: [
-        { name: 'RAM', value: '32GB' },
-        { name: 'CPU', value: '4 Cores' },
-        { name: 'Storage', value: '13 TB' },
-        { name: 'Network', value: '10GBPS' },
-      ],
-      plataform: {
-        AWS: ['$536.2 m6i.2x.large', 536.2],
-        GCP: ['$542.17 n2d-high-mem-8', 542.17],
-        AZURE: ['$554.95 B8ps-v2', 554.95],
-      },
-    },
-    {
-      name: 'Running an Ethereum full node',
-      specs: [
-        { name: 'RAM', value: '32GB' },
-        { name: 'CPU', value: '4 Cores' },
-        { name: 'Storage', value: '13 TB' },
-        { name: 'Network', value: '10GBPS' },
-      ],
-      plataform: {
-        AWS: ['$302 t4g.xlarge', 302],
-        AZURE: ['$314.05 B4as-v2', 314.05],
-        GCP: ['$321.79 n1-standard-4', 321.79],
-      },
-    },
-    {
-      name: 'Running an Ethereum Archive Node',
-      specs: [
-        { name: 'RAM', value: '32GB' },
-        { name: 'CPU', value: '4 Cores' },
-        { name: 'Storage', value: '13 TB' },
-        { name: 'Network', value: '10GBPS' },
-      ],
-      plataform: {
-        AZURE: ['$467 B4as-v2', 467],
-        AWS: ['$507.71 t4g.xlarge', 507.71],
-        GCP: ['$621.79 n1-standard-4', 621.79],
-      },
-    },
-    {
-      name: 'Running a Near Validator',
-      specs: [
-        { name: 'RAM', value: '32GB' },
-        { name: 'CPU', value: '4 Cores' },
-        { name: 'Storage', value: '13 TB' },
-        { name: 'Network', value: '10GBPS' },
-      ],
-      plataform: {
-        AWS: ['$247 t4g.2xlarge', 247],
-        AZURE: ['$263.09 B8-pls', 263.09],
-        GCP: ['$336 n1-standard-8', 336],
-      },
-    },
-    {
-      name: 'Running a Near RPC Node',
-      specs: [
-        { name: 'RAM', value: '32GB' },
-        { name: 'CPU', value: '4 Cores' },
-        { name: 'Storage', value: '13 TB' },
-        { name: 'Network', value: '10GBPS' },
-      ],
-      plataform: {
-        AZURE: ['$961.17 B8-pls', 961.17],
-        GCP: ['$1080 n1-standard-8', 1080],
-        AWS: ['$1117.82 t4g.2xlarge', 1117.82],
-      },
-    },
-    {
-      name: 'Running an Avalanche Node',
-      specs: [
-        { name: 'RAM', value: '32GB' },
-        { name: 'CPU', value: '4 Cores' },
-        { name: 'Storage', value: '13 TB' },
-        { name: 'Network', value: '10GBPS' },
-      ],
-      plataform: {
-        AWS: ['$298.62 t4g.2xlarge', 298.62],
-        AZURE: ['$301 B8-pls', 301],
-        GCP: ['$421 n1-standard-8', 421],
-      },
-    },
-    {
-      name: 'Running a Tron Node',
-      specs: [
-        { name: 'RAM', value: '32GB' },
-        { name: 'CPU', value: '4 Cores' },
-        { name: 'Storage', value: '13 TB' },
-        { name: 'Network', value: '10GBPS' },
-      ],
-      plataform: {
-        AWS: ['$653.12 c6g.4xlarge', 653.12],
-        GCP: ['$725 n1-standard-16', 725],
-        AZURE: ['$747 B16-als', 747],
-      },
-    },
-  ],
-}
+
 
 const CostLandingPage = () => {
   const [newMessageHtml, setNewMessageHtml] = useState('')
   const [nextStep, setNextStep] = useState<boolean>(false)
   const [selectionOptionSelected, setSelectionOptionSelected] = useState({
-    name: 'RPC',
+    name: 'NodeOperator',
   })
   const [subSelectionOptionSelected, setSubSelectionOptionSelected] = useState({
-    name: 'Running a Ethereum full archive node',
-    desc: 'Running an Ethereum full archive node...',
+   name:"Solana(RPC)"
   })
   const [providerSelectionOptionSelected, setProviderSelectionOptionSelected] =
-    useState([
-      {
-        name: 'Openmesh',
-      },
-      {
-        name: 'AWS',
-      },
-    ])
+    useState([])
 
   const selectionOptions = [
     {
-      name: 'RPC',
+      name: 'NodeOperator',
     },
   ]
 
   const selectionOptionsTosubSelectionOptions = {
-    RPC: dataOptions.RPC,
+    NodeOperator: dataOptions['NodeOperator'],
   }
 
   const providersSelectionOptions = [
-    {
-      name: 'Openmesh',
-    },
-    {
-      name: 'AWS',
-    },
-    {
-      name: 'GCP',
-    },
-    {
-      name: 'AZURE',
-    },
+    
   ]
 
   function findItemProvider(itemName: string) {
+    console.log("the item is" + itemName)
+    console.log("what is me: " + providerSelectionOptionSelected[0])
     const exists = providerSelectionOptionSelected.findIndex(
-      (provider) => provider.name === itemName,
+      (provider) => provider === itemName,
     )
-
+    console.log(exists)
     if (exists === -1) {
       return false
     } else {
@@ -256,11 +82,7 @@ const CostLandingPage = () => {
             {nextStep ? (
               <div className="mt-[30px]">
                 <DisplayCost
-                  data={
-                    selectionOptionsTosubSelectionOptions[
-                      selectionOptionSelected.name
-                    ]
-                  }
+                  data={selectionOptionSelected.name}
                   providers={providerSelectionOptionSelected}
                   subSelectionOption={subSelectionOptionSelected}
                   onBack={() => {
@@ -272,12 +94,13 @@ const CostLandingPage = () => {
               <div>
                 <div className="mt-[66px] flex gap-x-[50px]">
                   <div className="grid max-h-[500px] gap-y-[43px] overflow-y-auto pr-[30px] scrollbar-thin scrollbar-track-[#11132470] scrollbar-thumb-[#0e101f91] scrollbar-track-rounded-full scrollbar-thumb-rounded-md">
-                    {selectionOptionsTosubSelectionOptions[
+                    {Object.keys(selectionOptionsTosubSelectionOptions[
                       selectionOptionSelected.name
-                    ].map((subOption, index) => (
+                    ]).map((subOption, index) => (
                       <div
                         onClick={() => {
-                          setSubSelectionOptionSelected(subOption)
+                          setSubSelectionOptionSelected({name:subOption})
+                          setProviderSelectionOptionSelected([])
                         }}
                         key={index}
                         className={`h-fit max-w-[590px] cursor-pointer rounded-[10px] border-[1px] border-[#A4A4A4] py-[18px] px-[20px] text-[14px] font-bold text-[#000]  hover:bg-[#e9e9e949] lg:text-[20px]`}
@@ -285,15 +108,13 @@ const CostLandingPage = () => {
                         <div className="flex justify-between gap-x-[20px] xl:gap-x-[110px]">
                           <div>
                             {' '}
-                            <div>{subOption.name}</div>
-                            <div className="text-[12px] font-normal lg:text-[16px]">
-                              {subOption.desc}
-                            </div>
+                            <div>{subOption}</div>
+                           
                           </div>
                           <div
                             className={`my-auto h-[22px] w-[22px] flex-shrink-0 rounded-full border-[1px] border-[#939191] ${
                               subSelectionOptionSelected?.name ===
-                                subOption.name &&
+                                subOption &&
                               '!border-[#0354EC] bg-[#0354EC]'
                             }`}
                           ></div>
@@ -305,7 +126,10 @@ const CostLandingPage = () => {
                   <div className="text-[18px] font-bold text-[#AEAEAE] lg:text-[26px]">
                     <div>Pick providers to compare</div>
                     <div className="mt-[60px] grid gap-y-[43px]">
-                      {providersSelectionOptions.map(
+                      {
+                      Object.keys(selectionOptionsTosubSelectionOptions[
+                      selectionOptionSelected.name
+                    ][subSelectionOptionSelected.name]).map(
                         (providerOption, index) => (
                           <div
                             onClick={() => {
@@ -314,7 +138,7 @@ const CostLandingPage = () => {
                               ]
                               const exists = providers.findIndex(
                                 (provider) =>
-                                  provider.name === providerOption.name,
+                                  provider === providerOption,
                               )
                               if (exists === -1) {
                                 setProviderSelectionOptionSelected([
@@ -332,13 +156,13 @@ const CostLandingPage = () => {
                             <div className="flex items-center gap-x-[12px]">
                               <div
                                 className={`my-auto h-[47px]   w-[47px] cursor-pointer rounded-[5px]  border-[1px] border-[#939191] hover:bg-[#93919159] ${
-                                  findItemProvider(providerOption.name) &&
+                                  findItemProvider(providerOption) &&
                                   '!border-[#0354EC] !bg-[#0354EC]'
                                 }`}
                               ></div>
                               <div>
                                 {' '}
-                                <div>{providerOption.name}</div>
+                                <div>{providerOption}</div>
                               </div>
                             </div>
                           </div>
