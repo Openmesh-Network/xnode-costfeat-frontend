@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 'use client'
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
@@ -14,8 +15,6 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   loading: () => <p>Loading ...</p>,
 })
 
-
-
 const CostLandingPage = () => {
   const [newMessageHtml, setNewMessageHtml] = useState('')
   const [nextStep, setNextStep] = useState<boolean>(false)
@@ -23,7 +22,7 @@ const CostLandingPage = () => {
     name: 'NodeOperator',
   })
   const [subSelectionOptionSelected, setSubSelectionOptionSelected] = useState({
-   name:"Solana(RPC)"
+    name: 'Solana(RPC)',
   })
   const [providerSelectionOptionSelected, setProviderSelectionOptionSelected] =
     useState([])
@@ -38,13 +37,11 @@ const CostLandingPage = () => {
     NodeOperator: dataOptions['NodeOperator'],
   }
 
-  const providersSelectionOptions = [
-    
-  ]
+  const providersSelectionOptions = []
 
   function findItemProvider(itemName: string) {
-    console.log("the item is" + itemName)
-    console.log("what is me: " + providerSelectionOptionSelected[0])
+    console.log('the item is' + itemName)
+    console.log('what is me: ' + providerSelectionOptionSelected[0])
     const exists = providerSelectionOptionSelected.findIndex(
       (provider) => provider === itemName,
     )
@@ -94,12 +91,14 @@ const CostLandingPage = () => {
               <div>
                 <div className="mt-[66px] flex gap-x-[50px]">
                   <div className="grid max-h-[500px] gap-y-[43px] overflow-y-auto pr-[30px] scrollbar-thin scrollbar-track-[#11132470] scrollbar-thumb-[#0e101f91] scrollbar-track-rounded-full scrollbar-thumb-rounded-md">
-                    {Object.keys(selectionOptionsTosubSelectionOptions[
-                      selectionOptionSelected.name
-                    ]).map((subOption, index) => (
+                    {Object.keys(
+                      selectionOptionsTosubSelectionOptions[
+                        selectionOptionSelected.name
+                      ],
+                    ).map((subOption, index) => (
                       <div
                         onClick={() => {
-                          setSubSelectionOptionSelected({name:subOption})
+                          setSubSelectionOptionSelected({ name: subOption })
                           setProviderSelectionOptionSelected([])
                         }}
                         key={index}
@@ -109,12 +108,10 @@ const CostLandingPage = () => {
                           <div>
                             {' '}
                             <div>{subOption}</div>
-                           
                           </div>
                           <div
                             className={`my-auto h-[22px] w-[22px] flex-shrink-0 rounded-full border-[1px] border-[#939191] ${
-                              subSelectionOptionSelected?.name ===
-                                subOption &&
+                              subSelectionOptionSelected?.name === subOption &&
                               '!border-[#0354EC] bg-[#0354EC]'
                             }`}
                           ></div>
@@ -126,48 +123,46 @@ const CostLandingPage = () => {
                   <div className="text-[18px] font-bold text-[#AEAEAE] lg:text-[26px]">
                     <div>Pick providers to compare</div>
                     <div className="mt-[60px] grid gap-y-[43px]">
-                      {
-                      Object.keys(selectionOptionsTosubSelectionOptions[
-                      selectionOptionSelected.name
-                    ][subSelectionOptionSelected.name]).map(
-                        (providerOption, index) => (
-                          <div
-                            onClick={() => {
-                              const providers = [
+                      {Object.keys(
+                        selectionOptionsTosubSelectionOptions[
+                          selectionOptionSelected.name
+                        ][subSelectionOptionSelected.name],
+                      ).map((providerOption, index) => (
+                        <div
+                          onClick={() => {
+                            const providers = [
+                              ...providerSelectionOptionSelected,
+                            ]
+                            const exists = providers.findIndex(
+                              (provider) => provider === providerOption,
+                            )
+                            if (exists === -1) {
+                              setProviderSelectionOptionSelected([
+                                providerOption,
                                 ...providerSelectionOptionSelected,
-                              ]
-                              const exists = providers.findIndex(
-                                (provider) =>
-                                  provider === providerOption,
-                              )
-                              if (exists === -1) {
-                                setProviderSelectionOptionSelected([
-                                  providerOption,
-                                  ...providerSelectionOptionSelected,
-                                ])
-                              } else {
-                                providers.splice(exists, 1)
-                                setProviderSelectionOptionSelected(providers)
-                              }
-                            }}
-                            key={index}
-                            className={`text-[14px] font-bold text-[#AEAEAE] lg:text-[20px]`}
-                          >
-                            <div className="flex items-center gap-x-[12px]">
-                              <div
-                                className={`my-auto h-[47px]   w-[47px] cursor-pointer rounded-[5px]  border-[1px] border-[#939191] hover:bg-[#93919159] ${
-                                  findItemProvider(providerOption) &&
-                                  '!border-[#0354EC] !bg-[#0354EC]'
-                                }`}
-                              ></div>
-                              <div>
-                                {' '}
-                                <div>{providerOption}</div>
-                              </div>
+                              ])
+                            } else {
+                              providers.splice(exists, 1)
+                              setProviderSelectionOptionSelected(providers)
+                            }
+                          }}
+                          key={index}
+                          className={`text-[14px] font-bold text-[#AEAEAE] lg:text-[20px]`}
+                        >
+                          <div className="flex items-center gap-x-[12px]">
+                            <div
+                              className={`my-auto h-[47px]   w-[47px] cursor-pointer rounded-[5px]  border-[1px] border-[#939191] hover:bg-[#93919159] ${
+                                findItemProvider(providerOption) &&
+                                '!border-[#0354EC] !bg-[#0354EC]'
+                              }`}
+                            ></div>
+                            <div>
+                              {' '}
+                              <div>{providerOption}</div>
                             </div>
                           </div>
-                        ),
-                      )}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
