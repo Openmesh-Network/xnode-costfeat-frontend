@@ -67,7 +67,6 @@ const dataOptions = {
         Cost: 749,
         Time: '230',
       },
-
     },
     'Fantom(Read Only)': {
       Equinix: {
@@ -137,77 +136,6 @@ const dataOptions = {
         Time: '280',
       },
     },
-=======
-    },
-    'Fantom(Read Only)': {
-      Equinix: {
-        Cost: 2418,
-        Time: '240',
-      },
-      Azure: {
-        Cost: 699.17,
-        Time: '260',
-      },
-      GCP: {
-        Cost: 653.95,
-        Time: '270',
-      },
-      AWS: {
-        Cost: 500,
-        Time: '280',
-      },
-    },
-    'Ethereum(Full Node)': {
-      Azure: {
-        Cost: 503,
-        Time: '250',
-      },
-      GCP: {
-        Cost: 185,
-        Time: '260',
-      },
-      AWS: {
-        Cost: 150,
-        Time: '280',
-      },
-    },
-    'Ethereum(Archive Node)': {
-      Equinix: {
-        Cost: 2418,
-        Time: '240',
-      },
-      Azure: {
-        Cost: 2000,
-        Time: '250',
-      },
-      GCP: {
-        Cost: 1300,
-        Time: '280',
-      },
-      AWS: {
-        Cost: 1360,
-        Time: '290',
-      },
-    },
-    'Near(Validator)': {
-      'Equinix(BareMetal)': {
-        Cost: 558,
-        Time: '250',
-      },
-      Azure: {
-        Cost: 360,
-        Time: '260',
-      },
-      GCP: {
-        Cost: 220,
-        Time: '270',
-      },
-      AWS: {
-        Cost: 410,
-        Time: '280',
-      },
-    },
-
     'Near(RPC Node)': {
       Azure: {
         Cost: 1080,
@@ -221,7 +149,6 @@ const dataOptions = {
         Cost: 1130,
         Time: '290',
       },
-
     },
     'Avalanche Node': {
       Equinix: {
@@ -296,7 +223,6 @@ const dataOptions = {
       'Unified APIs': {
         Cost: 0,
         Time: '10 minutes',
-
       },
     },
   },
