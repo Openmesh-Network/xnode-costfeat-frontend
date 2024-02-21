@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable dot-notation */
 'use client'
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
@@ -69,7 +71,9 @@ const DisplayCost = ({
   const completedProviders = completeProviders(providers)
   // Antes de renderizar os provedores, ordene-os:
   const sortedProviders = completedProviders.sort((a, b) => {
+
     return a.Cost - b.Cost
+
   })
 
   function calculateTaxForBars(name) {
@@ -78,6 +82,7 @@ const DisplayCost = ({
       valueFinal[completedProviders[i]?.name] =
         parseInt(completedProviders[i][name]) || 0
     }
+
     return normalizeValues(valueFinal)
   }
 
@@ -91,7 +96,9 @@ const DisplayCost = ({
     for (const chave in obj) {
       objNormalizado[chave] = Number(((obj[chave] / maxValue) * 100).toFixed(2))
     }
+
     objNormalizado.xnode = Number(((30 / maxValue) * 100).toFixed(2))
+
 
     return objNormalizado
   }
@@ -223,8 +230,10 @@ const DisplayCost = ({
 
             <div
               key="openmesh"
+
               className="justify-between text-[14px] font-bold text-[#AEAEAE] lg:text-[20px]"
               style={{ display: xnodevisible[data] }}
+
             >
               <div className="mb-[10px] flex items-center gap-x-[12px]">
                 <div className="w-[150px]">
@@ -237,10 +246,12 @@ const DisplayCost = ({
                 >
                   <div
                     style={{
+
                       width: `${calculateTaxForBars('Time').xnode}%`,
                       height: '25px',
                       background: calcularGradiente(
                         calculateTaxForBars('Time').xnode / 100,
+
                       ),
                     }}
                   ></div>

@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 'use client'
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
@@ -98,7 +99,9 @@ const CostLandingPage = () => {
             ) : (
               <div>
                 <div className="mt-[66px] flex gap-x-[50px]">
+
                   <div className=" max-h-[500px] gap-y-[43px] overflow-y-auto pr-[30px] scrollbar-thin scrollbar-track-[#11132470] scrollbar-thumb-[#0e101f91] scrollbar-track-rounded-full scrollbar-thumb-rounded-md">
+
                     {Object.keys(
                       selectionOptionsTosubSelectionOptions[
                         selectionOptionSelected.name
@@ -158,7 +161,9 @@ const CostLandingPage = () => {
                           key={index}
                           className={`text-[14px] font-bold text-[#AEAEAE] lg:text-[20px]`}
                         >
+
                           <div className="flex items-center gap-x-[12px] ">
+
                             <div
                               className={`my-auto h-[47px]   w-[47px] cursor-pointer rounded-[5px]  border-[1px] border-[#939191] hover:bg-[#93919159] ${
                                 findItemProvider(providerOption) &&
